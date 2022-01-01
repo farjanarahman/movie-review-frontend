@@ -18,7 +18,7 @@ const Header = ({ getSearchResult }) => {
   useEffect(() => {
     fetch(
       `http://localhost:5000/checkAdmin/${
-        loggedInUser.isSignedIn ? loggedInUser.email : userInfo.email
+        loggedInUser ? loggedInUser.email : userInfo.email
       }`
     )
       .then((res) => res.json())
@@ -85,7 +85,7 @@ const Header = ({ getSearchResult }) => {
               </Link>
             </li>
             {
-              (isAdmin || admin.admin) &&  <li className="nav-item">
+              (isAdmin || admin) &&  <li className="nav-item">
               <Link to="admin">
                 <a className="nav-link">
                   <strong>Admin Panel</strong>
@@ -94,7 +94,7 @@ const Header = ({ getSearchResult }) => {
             </li>
             }
             <li className="nav-item">
-              {userInfo || loggedInUser.email ? (
+              {userInfo || loggedInUser.isSignedIn ? (
                 <Link className="nav-link" onClick={signOut}>Logout</Link>
               ) : (
                 <Link to="/login">
